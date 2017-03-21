@@ -1,0 +1,82 @@
+{
+  "status": "success",
+  "data": [
+    { "shortId":
+      "idProvider": 9884, // id dans la bdd du provider
+      "providerName":"quefaire",
+      "type": 1,
+      "title": "Livre Paris, le salon du livre de Paris",
+      "leadText": "Du 24 au 27 mars prochain, rejoignez-nous Porte de Versailles pour assister à la 37ème édition du plus grand événement généraliste dédié au livre en France !",
+      "components": [
+        {
+          "type": "text",
+          "data": {
+            "block": "<p class=\"\">Livre Paris est un salon littéraire unique au monde, reflet de l’extraordinaire richesse et diversité du monde de l’édition. 4 jours de célébration du plaisir de lire durant lesquels plus de 3000 auteurs venus du monde entier, illustres ou en devenir, iront à la rencontre de leur public.&nbsp;Séances de dédicaces, débats, animations, ateliers : Livre Paris, ce sont des découvertes, des rencontres, des moments de partage, d'échanges d’idées.<br></p><h4>Les lettres marocaines à l'honneur</h4><p>Livre Paris accueille cette année le Maroc en pays invité d’honneur avec une délégation de 40 auteurs, refletant la diversité et le dynamisme de la création littéraire contemporaine du Royaume. Du 24 au 27 mars, rencontrez des auteurs reconnus internationalement mais également de nouveaux talents émergents et prometteurs.<br>Pour la première fois depuis sa création, le Salon met à l’honneur les lettres et la culture d'un pays du monde arabe, symbole fort des échanges croissants entre le Maroc et la France, en particulier sur le plan éditorial et littéraire.</p><p class=\"\"><i><a href=\"https://www.livreparis.com/fr/Programmation/\" target=\"_blank\">Tout le programme bientôt en ligne ici</a></i></p>"
+          }
+        },
+      ],
+      "html": "<div class=\"component component-text\"><p class=\"\">Livre Paris est un salon littéraire unique au monde, reflet de l’extraordinaire richesse et diversité du monde de l’édition. 4 jours de célébration du plaisir de lire durant lesquels plus de 3000 auteurs venus du monde entier, illustres ou en devenir, iront à la rencontre de leur public.&nbsp;Séances de dédicaces, débats, animations, ateliers : Livre Paris, ce sont des découvertes, des rencontres, des moments de partage, d'échanges d’idées.<br></p><h4>Les lettres marocaines à l'honneur</h4><p>Livre Paris accueille cette année le Maroc en pays invité d’honneur avec une délégation de 40 auteurs, refletant la diversité et le dynamisme de la création littéraire contemporaine du Royaume. Du 24 au 27 mars, rencontrez des auteurs reconnus internationalement mais également de nouveaux talents émergents et prometteurs.<br>Pour la première fois depuis sa création, le Salon met à l’honneur les lettres et la culture d'un pays du monde arabe, symbole fort des échanges croissants entre le Maroc et la France, en particulier sur le plan éditorial et littéraire.</p><p class=\"\"><i><a href=\"https://www.livreparis.com/fr/Programmation/\" target=\"_blank\">Tout le programme bientôt en ligne ici</a></i></p></div><div class=\"component component-content is-article\"><a href=\"http://quefaire.paris.fr/17184/gagnez-des-entrees-pour-le-salon-du-livre\" target=\"_blank\" style=\"background-image: url(http://quefaire-api.paris.fr/images/4345);\" class=\"component-content-image\"></a><div class=\"component-content-wrapper\"><div class=\"component-content-subtitle\">Jeu</div><h2 class=\"component-content-title\"><a href=\"http://quefaire.paris.fr/17184/gagnez-des-entrees-pour-le-salon-du-livre\" target=\"_blank\">Gagnez des entrées pour le Salon du livre</a></h2><div class=\"component-content-text\"><p><p>Publié le lundi 13 mars 2017</p></div></div><a href=\"http://quefaire.paris.fr/17184/gagnez-des-entrees-pour-le-salon-du-livre\" target=\"_blank\" class=\"component-content-link\"></a></div>",
+      "image": {
+        "url": "http://quefaire-api.paris.fr/images/4345",
+        "credit": "Livre Paris 2017",
+        "alt": "Affiche de salon du Livre de Paris"
+      },
+      "tags": [
+        "En famille"
+      ],
+      "place": {
+        "address": "1 place de la Porte de Versailles",
+        "zipCode": 75015,
+        "city": "Paris",
+        "lat": 48.832136,
+        "lon": 2.28816010000003,
+        "metro": "12 : Porte de Versailles (19m)\n12 : Convention (788m)",
+        "name": "Paris expo"
+      },
+      "modality": {
+        "priceType": "payant",
+        "priceDetail": "De 6 à 12 €\nPass 4 jours de 29 à 39 €",
+        "accessType": "conseillee",
+        "accessLink": "https://www.livreparis.com/fr/Billetterie/",
+        "accessPhone": null,
+        "accessMail": null
+      },
+      "contact": {
+        "phone": null,
+        "mail": null,
+        "facebook": "https://www.facebook.com/salondulivre/",
+        "twitter": "https://twitter.com/salondulivre",
+        "name": "",
+        "url": "https://www.livreparis.com"
+      },
+        "evenements": {
+          "realDateStart": "2017-03-24T00:00:00.000Z",
+          "realDateEnd": "2017-03-27T00:00:00.000Z",
+          "category": {
+            "lvl0": "Festivités",
+            "lvl1": "Festivités > Salon / Expo vente"
+            },
+            "periodes": [
+              {
+                "idEvenementsPeriodes": 75004,
+                "idPages": 9884,
+                "dateStart": "2017-03-24T00:00:00.000Z",
+                "dateEnd": "2017-03-27T00:00:00.000Z",
+                "seances": [
+                  {
+                    "idEvenementsPeriodes": 75004,
+                    "hourStart": "13:00:11",
+                    "hourEnd": "19:00:11",
+                    "weekDays": "1",
+                    "timeRange": "après-midi,soir"
+                  },
+                ]
+              }
+            ],
+            "fermetures": []
+          }
+        },
+      }
+    }
+  ]
+}
