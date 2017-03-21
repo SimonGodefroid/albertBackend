@@ -1,6 +1,4 @@
 var mongoose = require("mongoose");
-// Le package `mongoose-simple-random` permet de récupérer aléatoirement des documents dans une collection
-// var random = require("mongoose-simple-random");
 
 var EventSchema = new mongoose.Schema({
   "shortId": Number,
