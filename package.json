@@ -1,0 +1,26 @@
+{
+  "name": "albertbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "compression": "^1.6.2",
+    "cors": "^2.8.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.14.1",
+    "helmet": "^3.4.1",
+    "mongoose": "^4.8.4",
+    "mongoose-simple-random": "^0.4.1",
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0",
+    "uid2": "0.0.3"
+  }
+}
