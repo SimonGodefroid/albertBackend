@@ -1,8 +1,8 @@
 {
   "status": "success",
   "data": [
-    { "shortId":
-      "idProvider": 9884, // id dans la bdd du provider
+    { "shortId": 123,
+      "idProvider": 9884,
       "providerName":"quefaire",
       "type": 1,
       "title": "Livre Paris, le salon du livre de Paris",
