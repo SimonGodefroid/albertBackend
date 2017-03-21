@@ -2,27 +2,19 @@ var mongoose = require("mongoose");
 // Le package `mongoose-simple-random` permet de récupérer aléatoirement des documents dans une collection
 // var random = require("mongoose-simple-random");
 
-var Events = new mongoose.Schema({
+var EventSchema = new mongoose.Schema({
   "shortId": Number,
   "idProvider":Number,
   "providerName":String,
-  "id": Number, // id de l'event dans la base de 
+  "id": Number,
   "type": Number,
   "title": String,
   "leadText":String,
-  "components": [
-    {
-      "type": "text",
-      "data": {
-        "block": String
-      }
-    },
-  ],
-  "html": String,
-    "image": {
-      "url": String,
-      "credit": String,
-      "alt": String
+  "components": [Object],
+  "image": {
+    "url": String,
+    "credit": String,
+    "alt": String
     },
     "tags": [
       String
@@ -59,23 +51,8 @@ var Events = new mongoose.Schema({
         "lvl0": String,
         "lvl1": String
       },
-      "periodes": [
-        {
-          "idEvenementsPeriodes": Number,
-          "dateStart": String,
-          "dateEnd": String,
-          "seances": [
-            {
-              "idEvenementsPeriodes": Number,
-              "hourStart": String,
-              "hourEnd": String,
-              "weekDays": String,
-              "timeRange": String
-            },
-          ]
-        }
-      ],
-      "fermetures": []
+      "periodes": [Object],
+      "fermetures": [],
     }
 });
 
