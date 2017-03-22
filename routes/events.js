@@ -17,7 +17,6 @@ router.get('/all', function (req, res) {
   });
 });
 
-
 router.get('/', function (req, res,next) {
   if(!req.query.category){
     return next("Category is mandatory");
@@ -57,11 +56,7 @@ Event.
     
     }
   });
-})
-
-
-
-
+});
 
 // Paramètres reçus :
 // - req.query.category obligatoire || 
@@ -69,7 +64,4 @@ Event.
 // - req.query.limit || 
 // - req.query.dateBegin || 
 // - req.query.dateEnd || 
-
-
-
 module.exports = router;
