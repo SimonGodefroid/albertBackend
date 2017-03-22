@@ -159,14 +159,7 @@ events.forEach(function (event_to_save) {
 		},
 		"modality": event_to_save.modality,
 		"contact": event_to_save.contact,
-		"evenements": {
-			"realDateStart": event_to_save.evenements.realDateStart,
-			"realDateEnd": event_to_save.evenements.realDateEnd,
-			"category": event_to_save.evenements.category,
-			"periodes": event_to_save.evenements.periodes,
-			"fermetures": event_to_save.evenements.fermetures,
-			"seances": event_to_save.evenements.periodes.seances,
-		}
+		"evenements": event_to_save.evenements,
 	});
 	var event = new Event(data);
 	event.save(function (err,

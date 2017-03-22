@@ -43,24 +43,7 @@ var EventSchema = new mongoose.Schema({
         "name": String,
         "url": String
       },
-      "evenements": {
-        "realDateStart": String,
-        "realDateEnd": String,
-      "category": {
-        "lvl0": String,
-        "lvl1": String
-      },
-      "periodes": [
-        {
-          seances : [Object],
-          "dateEnd" : String,
-          "dateStart" : String,
-          "idPages" : Number,
-          "idEvenementsPeriodes" : Number
-        }
-      ],
-      "fermetures": [],
-    }
+      "evenements": Object,
 });
 
 module.exports = mongoose.model("Event", EventSchema, "events");
