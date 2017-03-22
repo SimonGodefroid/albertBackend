@@ -164,7 +164,8 @@ events.forEach(function (event_to_save) {
 			"realDateEnd": event_to_save.evenements.realDateEnd,
 			"category": event_to_save.evenements.category,
 			"periodes": event_to_save.evenements.periodes,
-			"fermetures": event_to_save.evenements.fermetures
+			"fermetures": event_to_save.evenements.fermetures,
+			"seances": event_to_save.evenements.periodes.seances,
 		}
 	});
 	var event = new Event(data);

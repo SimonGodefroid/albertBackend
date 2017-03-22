@@ -50,7 +50,15 @@ var EventSchema = new mongoose.Schema({
         "lvl0": String,
         "lvl1": String
       },
-      "periodes": [Object],
+      "periodes": [
+        {
+          seances : [Object],
+          "dateEnd" : String,
+          "dateStart" : String,
+          "idPages" : Number,
+          "idEvenementsPeriodes" : Number
+        }
+      ],
       "fermetures": [],
     }
 });

@@ -20,7 +20,7 @@ router.get('/all', function (req, res) {
 
 router.get('/', function (req, res,next) {
   if(!req.query.category){
-    return next("Categories is mandatory");
+    return next("Category is mandatory");
   }
   
   Event.find({
@@ -33,9 +33,29 @@ router.get('/', function (req, res,next) {
       events:events,
       count: events.length
     }); 
+    console.log(events[0].evenements.realDateStart);
     }
   });
 });
+
+
+
+// router.get('/date', function (req, res,next) {
+//   if(!req.query.startDate){
+//     return next("startDate is mandatory");
+//   }
+  
+//   Event.find({})
+//   .
+  
+// });
+
+
+
+
+
+
+
 
 
 // Paramètres reçus :
