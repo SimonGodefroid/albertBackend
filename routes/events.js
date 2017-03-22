@@ -39,13 +39,13 @@ router.get('/', function (req, res,next) {
 
 
 router.get('/date', function (req, res,next) {
-  // if(!req.query.date){
-  //   return next("Date is mandatory");
-  // }
-  console.log('typeof req.query.realDateStart',typeof  new Date (req.query.realDateStart));
+  if(!req.query.dateBegin){
+    return next("Date is mandatory");
+  }
 Event.
   find({
-    'evenements.realDateStart': {$gte: new Date (req.query.realDateStart)}})
+    'evenements.realDateStart': {$gte: new Date (req.query.dateBegin),$lte: new Date (req.query.dateEnd)}})
+    .sort({'evenements.realDateStart': 'ascending'})
     .exec(function (err, events) {
     if (err) {
       console.log('An error occurred' + err);
@@ -64,11 +64,11 @@ Event.
 
 
 // Paramètres reçus :
-// - req.query.city obligatoire || 
+// - req.query.category obligatoire || 
 // - req.query.skip || 
 // - req.query.limit || 
-// - req.query.priceMin || 
-// - req.query.priceMax || 
+// - req.query.dateBegin || 
+// - req.query.dateEnd || 
 
 
 
