@@ -42,11 +42,10 @@ router.get('/date', function (req, res,next) {
   // if(!req.query.date){
   //   return next("Date is mandatory");
   // }
-  console.log('typeof req.query.startDate',typeof req.query.realStartDate);
+  console.log('typeof req.query.realDateStart',typeof  new Date (req.query.realDateStart));
 Event.
   find({
-    //'evenements.realDateStart': req.query.startDate
-  }).where('evenements.realStartDate').equals(req.query.realStartDate)
+    'evenements.realDateStart': {$gte: new Date (req.query.realDateStart)}})
     .exec(function (err, events) {
     if (err) {
       console.log('An error occurred' + err);

@@ -43,7 +43,7 @@ var EventSchema = new mongoose.Schema({
         "name": String,
         "url": String
       },
-      "evenements": Object,
+      "evenements": Object
 });
 
 module.exports = mongoose.model("Event", EventSchema, "events");
