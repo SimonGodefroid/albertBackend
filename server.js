@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGODB_URI, function(err) { // paramètre qui vien
 
 var express = require("express");
 var app = express();
+app.use(express.static('public'))
 
 // Le package `helmet` est une collection de protections contre certaines vulnérabilités HTTP
 var helmet = require("helmet");
@@ -32,7 +33,7 @@ var passport = require("passport");
 app.use(passport.initialize()); // TODO test
 
 app.get("/", function(req, res) {
-  res.send("Welcome to the Albert API.");
+  res.render(index);
 });
 
 // `Cross-Origin Resource Sharing` est un mechanisme permettant d'autoriser les requêtes provenant d'un nom de domaine different
