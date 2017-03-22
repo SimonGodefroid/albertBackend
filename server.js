@@ -41,10 +41,8 @@ var cors = require("cors");
 app.use("/api", cors());
 
 // Les routes sont séparées dans plusieurs fichiers
-var coreRoutes = require("./routes/core.js");
 var eventsRoutes = require("./routes/events.js");
 // Les routes relatives aux utilisateurs auront pour prefix d'URL `/user`
-app.use("/api", coreRoutes);
 app.use("/api/events", eventsRoutes);
 
 // Toutes les méthodes HTTP (GET, POST, etc.) des pages non trouvées afficheront une erreur 404
