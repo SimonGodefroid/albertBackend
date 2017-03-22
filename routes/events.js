@@ -32,27 +32,33 @@ router.get('/', function (req, res,next) {
     res.json({
       events:events,
       count: events.length
-    }); 
-    console.log(events[0].evenements.realDateStart);
+    });
     }
   });
 });
 
 
-
-// router.get('/date', function (req, res,next) {
-//   if(!req.query.startDate){
-//     return next("startDate is mandatory");
-//   }
-  
-//   Event.find({})
-//   .
-  
-// });
-
-
-
-
+router.get('/date', function (req, res,next) {
+  // if(!req.query.date){
+  //   return next("Date is mandatory");
+  // }
+  console.log('typeof req.query.startDate',typeof req.query.realStartDate);
+Event.
+  find({
+    //'evenements.realDateStart': req.query.startDate
+  }).where('evenements.realStartDate').equals(req.query.realStartDate)
+    .exec(function (err, events) {
+    if (err) {
+      console.log('An error occurred' + err);
+    } else {        
+    res.json({
+      events:events,
+      count: events.length
+    }); 
+    
+    }
+  });
+})
 
 
 
