@@ -27,9 +27,9 @@ router.get('/', function (req, res,next) {
 });
 
 
-// 
-// Route pour tous les events d'une catégorie
-// http://localhost:3002/api/events/?category=
+// DEV
+// Route pour tous les events
+// http://localhost:3002/api/events/all
 
 router.get('/all', function (req, res) {
   Event.find({})
@@ -102,37 +102,39 @@ router.get('/date/all', function (req, res,next) {
 
 
 
-// router.get('/date/filters', function (req, res,next) {
-//     Event.
-//   find($and:[{
-//     'evenements.realDateStart': {$lte: today},
-//     'evenements.realDateEnd': {$gt: today},
-//   },{
-//     'evenements.realDateStart': {$lte: today},
-//     'evenements.realDateEnd': {$gt: today}},
-//   })
-//   .sort({'evenements.realDateStart': 'ascending'})
-//   .exec(function (err, events) {
-//     if (err) {
-//       console.log('An error occurred' + err);
-//     } else {    
-//       console.log(events.length);
-//       var eventsDates=[];
-//       for (var i = 0;i<events.length;i++){
-//         var eventDate = {};
-//         eventDate.realDateStart = events[i].evenements.realDateStart;
-//         eventDate.realDateEnd = events[i].evenements.realDateEnd;
-//         eventDate.title = events[i].title;
-//         eventsDates.push(eventDate);
-//       }
-//       console.log(eventsDates);
-//       res.json({
-//         events: eventsDates,
-//         count: events.length
-//       }); 
-//     }
-//   });
-// });
+
+
+
+router.get('/date/filters', function (req, res,next) {
+    Event.
+  find({
+    'evenements.realDateStart': {$lte: today},
+    'evenements.realDateEnd': {$gt: today},
+  })
+
+
+  
+  .sort({'evenements.realDateStart': 'ascending'})
+  .exec(function (err, events) {
+    if (err) {
+      console.log('An error occurred' + err);
+    } else {
+      var eventsDates=[];
+      for (var i = 0;i<events.length;i++){
+        var eventDate = {};
+        eventDate.realDateStart = events[i].evenements.realDateStart;
+        eventDate.realDateEnd = events[i].evenements.realDateEnd;
+        eventDate.title = events[i].title;
+        eventsDates.push(eventDate);
+      }
+      console.log(eventsDates);
+      res.json({
+        events: eventsDates,
+        count: events.length
+      }); 
+    }
+  });
+});
 
 
 
