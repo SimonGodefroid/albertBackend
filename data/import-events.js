@@ -9,10 +9,10 @@ mongoose.connect(process.env.MONGODB_URI, function (err) {
 	}
 });
 
-// var User = require("../models/User.js");
+var User = require("../models/User.js");
 var Event = require("../models/Event.js");
 
-// var users = require("./users.json");
+var users = require("./users.json");
 var events = require("./events.json");
 
 var albertCat = [];
@@ -164,6 +164,29 @@ function addAlbertCat(category) {
 
 let ids = [];
 
+// users
+for (var i = 0; i < users.length; i++) {
+  User.register(
+    new User({
+      shortId: users[i].id,
+      email: users[i].username.toLowerCase() + "@albert.com",
+      token: uid2(16),
+      account: {
+        username: users[i].username,
+        favorites: [],
+      }
+    }),
+    "password01", // Le mot de passe doit être obligatoirement le deuxième paramètre transmis à `register` afin d'être crypté
+    function(err, obj) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("saved user " + obj.account.username);
+      }
+    }
+  );
+}
+
 // events
 events.forEach(function (event_to_save) {
 
@@ -210,10 +233,15 @@ events.forEach(function (event_to_save) {
 			} else {
 				console.log("saved event");
 			}
-			console.log(ids);
 		});
 	} else {
 		console.log('doublon');
 	}
+});
 
-})
+setTimeout(
+  function() {
+    mongoose.connection.close();
+  },
+  8000
+);

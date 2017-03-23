@@ -10,25 +10,17 @@ var UserSchema = new mongoose.Schema({
   // Nous choisisons de créer un objet `account` dans lequel nous stockerons les informations non sensibles
   account: {
     username: { type: String, unique: true, required: true },
-    description: String,
-    photos: [String],
-    events: [
+    favorites: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Events"
-      }
-    ],
-    places: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Places"
+        ref: "Event"
       }
     ]
   }
 });
 
 UserSchema.plugin(passportLocalMongoose, {
-  usernameField: "email", // L'authentification utilisera `email` plutôt `username`
+  usernameField: "account.username", // L'authentification utilisera `email` plutôt `username`
   session: false // L'API ne nécessite pas de sessions
 });
 
