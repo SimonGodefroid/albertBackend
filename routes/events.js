@@ -1,30 +1,57 @@
 var express = require("express");
 var router = express.Router();
 var Event = require("../models/Event.js");
+var request = require('request');
 
 // PROD
 // Route pour tous les events d'une catégorie
 // http://localhost:3002/api/events/?category=5
 
-router.get('/', function (req, res,next) {
-  if(!req.query.category){
-    return next("Category is mandatory");
-  }
-  Event.find({
-    albertCat: { $in: [parseInt(req.query.category)]},
-  })
-  .sort({'evenements.realDateStart': 'ascending'})
-  .exec(function (err, events) {
-    if (err) {
-      console.log('An error occurred' + err);
-    } else {        
-      res.json({
-        events:events,
-        count: events.length
-      }); 
+router.get('/',
+  function(req,res,next){
+    if(!req.query.category){
+      return next("Category is mandatory");
     }
+    var currentTime = new Date();
+    var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+    Event.find({
+      $and: [
+          {albertCat: { $in: [parseInt(req.query.category)]}},
+          {'$or':[
+            {
+              'evenements.realDateStart': {$lte: today},
+              'evenements.realDateEnd': {$gt: today},
+            },
+            {
+              'evenements.realDateStart': {$gte: today},
+            }
+            ]
+          }
+      ]
+    })
+    .sort({'evenements.realDateStart': 'ascending'})
+    //.select('evenements.realDateStart')
+    .select(['evenements.realDateStart','evenements.realDateEnd','title','idProvider','albertCat'])
+    .exec(function (err, events) {
+      if (err) {
+        console.log('An error occurred' + err);
+      } else {
+        res.json({
+          category:req.query.category,
+          total: events.length,
+          events:events,
+        });
+      }
+    });
   });
-});
+
+
+
+
+
+
+
+
 
 
 // DEV
@@ -46,16 +73,17 @@ router.get('/all', function (req, res) {
   });
 });
 
-
-
-
 router.get('/date', function (req, res,next) {
   var currentTime = new Date();
   var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
   Event.
   find({
-    'evenements.realDateStart': {$lte: today},
-    'evenements.realDateEnd': {$gte: today},
+    '$or':[{
+      'evenements.realDateStart': {$lte: today},
+      'evenements.realDateEnd': {$gt: today},
+    },{
+      'evenements.realDateStart': {$gte: today},
+    }]
   })
   .sort({'evenements.realDateStart': 'ascending'})
   .exec(function (err, events) {
@@ -74,36 +102,41 @@ router.get('/date', function (req, res,next) {
 // Route pour tous les events de toutes les catégories avec les dates et les titres uniquement
 // http://localhost:3002/api/events/date/all
 
-router.get('/date/all', function (req, res,next) {
-  var currentTime = new Date();
-  var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
-  Event.
-  find({})
-  .sort({'evenements.realDateStart': 'ascending'})
-  .exec(function (err, events) {
-    if (err) {
-      console.log('An error occurred' + err);
-    } else {    
-      console.log(events.length);
-      var eventsDates=[];
-      for (var i = 0;i<events.length;i++){
-        var eventDate = {};
-        eventDate.realDateStart = events[i].evenements.realDateStart;
-        eventDate.realDateEnd = events[i].evenements.realDateEnd;
-        eventDate.title = events[i].title;
-        eventDate.idProvider = events[i].idProvider;
-        eventsDates.push(eventDate);
-      }
-      console.log(eventsDates);
-      res.json({
-        events: eventsDates,
-        count: events.length
-      }); 
-    }
-  });
-});
+// router.get('/date/all', function (req, res,next) {
+//   var currentTime = new Date();
+//   var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+//   Event.
+//   find({})
+//   .sort({'evenements.realDateStart': 'ascending'})
+//   .exec(function (err, events) {
+//     if (err) {
+//       console.log('An error occurred' + err);
+//     } else {    
+//       console.log(events.length);
+//       var eventsDates=[];
+//       for (var i = 0;i<events.length;i++){
+//         var eventDate = {};
+//         eventDate.realDateStart = events[i].evenements.realDateStart;
+//         eventDate.realDateEnd = events[i].evenements.realDateEnd;
+//         eventDate.title = events[i].title;
+//         eventDate.idProvider = events[i].idProvider;
+//         eventsDates.push(eventDate);
+//       }
+//       console.log(eventsDates);
+//       res.json({
+//         events: eventsDates,
+//         count: events.length
+//       }); 
+//     }
+//   });
+// });
 
-router.get('/date/filters',
+
+// DEV
+// Route pour tous les events de toutes les catégories avec les dates et les titres uniquement
+// http://localhost:3002/api/events/date/filtersdev
+
+router.get('/date/filtersdev',
   function(req,res,next){
     var currentTime = new Date();
     var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
@@ -116,8 +149,7 @@ router.get('/date/filters',
       }]
     })
     .sort({'evenements.realDateStart': 'ascending'})
-    //.select('evenements.realDateStart')
-    .select(['evenements.realDateStart','evenements.realDateEnd','title'])
+    .select(['evenements.realDateStart','evenements.realDateEnd','title','idProvider'])
     .exec(function (err, events) {
       if (err) {
         console.log('An error occurred' + err);
@@ -130,62 +162,30 @@ router.get('/date/filters',
     });
   });
 
-// router.get('/date/filters',
-// function (req, res,next) {
-//   var currentTime = new Date();
-//   var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
-//   Event.find({
-//     'evenements.realDateStart': {$lte: today},
-//     'evenements.realDateEnd': {$gt: today},
-//   })
-//   .sort({'evenements.realDateStart': 'ascending'})
-//   .exec(function (err, eventsInProgress) {
-//     if (err) {
-//       console.log('An error occurred' + err);
-//     } else {
-//       Event.find({
-//         'evenements.realDateStart': {$gte: today},
-//       })
-//       .sort({'evenements.realDateStart': 'ascending'})
-//       .exec(function(err,eventsComing){
-//         if (err) {
-//           console.log('An error occurred' + err);
-//         } else {
-//         var eventsInProgressList=[];
-//         for (var j=0; j<eventsInProgress.length;j++){
-//           var eventInProgress = {};
-//           eventInProgress.realDateStart = eventsInProgress[j].evenements.realDateStart;
-//           eventInProgress.realDateEnd = eventsInProgress[j].evenements.realDateEnd;
-//           eventInProgress.title = eventsInProgress[j].title;
-//           eventsInProgressList.push(eventInProgress);
-//         }
-//         var eventsComingList=[];
-//         for (var i = 0;i<eventsComing.length;i++){
-//           var eventComing = {};
-//           eventComing.realDateStart = eventsComing[i].evenements.realDateStart;
-//           eventComing.realDateEnd = eventsComing[i].evenements.realDateEnd;
-//           eventComing.title = eventsComing[i].title;
-//           eventsComingList.push(eventComing);
-//         }
-//         res.json({
-//           //events:eventsInProgressDates.concat(eventsComing),
-//           eventsInProgress:eventsInProgressList,
-//           totalInProgress: eventsInProgress.length,
-//           eventsComing: eventsComingList,
-//           totalComing: eventsComing.length,
-//           events:eventsInProgressList.concat(eventsComingList),
-//           total: eventsInProgress.length + eventsComingList.length
-//         });
-//         }
-//       });
-//     }
-//   });
-// });
 
-
-
-
-
+router.get('/test',function(req,res){
+  request('https://api.paris.fr/api/data/2.2/QueFaire/get_events/?token=ec30faf59bcfe1e3ff4637c1a1246e3426591d3f23ec814ec5686305cb83c158&categories=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,26,27,28,29,30,31,32,33,35,37,38&tags=&start=&end=&offset=&limit=2000', 
+  function (error, response, body) {
+    if (!error && response.statusCode == 200) {   
+      var result = JSON.parse(body);
+      var events=[]
+      for (var i = 0; i<result.data.length;i++){
+        var event = {};
+        event.title = result.data[i].title;        
+        event.id = result.data[i].id;        
+        event.date = result.data[i].evenements.realDateStart;
+        event.category0 = result.data[i].evenements.category.lvl0;
+        event.category1 = result.data[i].evenements.category.lvl1;
+        events.push(event);
+      }
+    res.json({
+      count:events.length,
+      events:events,
+      // result:result.data
+    });
+    }
+  });
+});
 
 
 // Paramètres reçus :
