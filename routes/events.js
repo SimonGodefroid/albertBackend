@@ -13,7 +13,10 @@ router.get('/',
       return next("Category is mandatory");
     }
     var currentTime = new Date();
-    var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+    var today = new Date( Date.UTC (currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate()));
+    if(!req.query.realDateStart){
+      console.log('req.query.realDateStart',req.query.realDateStart);
+    }
     Event.find({
       $and: [
           {albertCat: { $in: [parseInt(req.query.category)]}},
@@ -44,14 +47,6 @@ router.get('/',
       }
     });
   });
-
-
-
-
-
-
-
-
 
 
 // DEV
@@ -161,6 +156,62 @@ router.get('/date/filtersdev',
       }
     });
   });
+
+
+router.get('/date/overview',
+  function(req,res,next){
+    var currentTime = new Date();
+    var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+    Event.find({
+      $and: [
+        {albertCat: { $in: [parseInt(req.query.category)]}},
+        {
+          '$or':[{
+            'evenements.realDateStart': {$lte: today},
+            'evenements.realDateEnd': {$gt: today},
+          }]
+        }]
+      })
+    .sort({'evenements.realDateStart': 'ascending'})
+    .exec(function (err, eventsInProgress) {
+      if (err) {
+        console.log('An error occurred' + err);
+      } else {
+        Event.find({
+          'evenements.realDateStart': {$gte: today}
+        })
+        .sort({'evenements.realDateStart': 'ascending'})
+        .exec(function (err, eventsComing) {
+          if (err) {
+            console.log('An error occurred' + err);
+          } else {
+            res.json({
+              eventsInProgressCount:eventsInProgress.length,
+              eventsComingCount:eventsComing.length,
+              eventsInProgress:eventsInProgress,
+              eventsComing:eventsComing,
+              total: eventsInProgress.length
+            });
+          }
+        });
+      };
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.get('/test',function(req,res){

@@ -43,6 +43,7 @@ var EventSchema = new mongoose.Schema({
         "name": String,
         "url": String
       },
+      "contact.phone": String,
       "evenements": Object
 });
 

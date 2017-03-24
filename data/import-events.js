@@ -196,6 +196,8 @@ events.forEach(function (event_to_save) {
 		event_to_save.evenements.realDateStart = new Date(event_to_save.evenements.realDateStart);
 		event_to_save.evenements.realDateEnd = new Date(event_to_save.evenements.realDateEnd);
 
+		event_to_save.contact.phone = String(event_to_save.contact.phone);
+
 		event_to_save.evenements.periodes.map(function (periode) {
 			periode.dateStart = new Date(periode.dateStart);
 			periode.dateEnd = new Date(periode.dateEnd);
@@ -223,6 +225,7 @@ events.forEach(function (event_to_save) {
 			},
 			"modality": event_to_save.modality,
 			"contact": event_to_save.contact,
+			"contact.phone": String(event_to_save.contact.phone),
 			"evenements": event_to_save.evenements
 		});
 		var event = new Event(data);
