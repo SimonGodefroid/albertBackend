@@ -31,7 +31,7 @@ router.get('/',
     })
     .sort({'evenements.realDateStart': 'ascending'})
     //.select('evenements.realDateStart')
-    .select(['evenements.realDateStart','evenements.realDateEnd','title','idProvider','albertCat'])
+    // .select(['evenements.realDateStart','evenements.realDateEnd','title','idProvider','albertCat'])
     .exec(function (err, events) {
       if (err) {
         console.log('An error occurred' + err);
@@ -64,11 +64,11 @@ router.get('/all', function (req, res) {
   .exec(function (err, events) {
     if (err) {
       console.log('An error occurred' + err);
-    } else {        
+    } else {
       res.json({
         events:events,
         count: events.length
-      }); 
+      });
     }
   });
 });
@@ -89,11 +89,11 @@ router.get('/date', function (req, res,next) {
   .exec(function (err, events) {
     if (err) {
       console.log('An error occurred' + err);
-    } else {        
+    } else {
       res.json({
         events:events,
         count: events.length
-      }); 
+      });
     }
   });
 });
@@ -111,7 +111,7 @@ router.get('/date', function (req, res,next) {
 //   .exec(function (err, events) {
 //     if (err) {
 //       console.log('An error occurred' + err);
-//     } else {    
+//     } else {
 //       console.log(events.length);
 //       var eventsDates=[];
 //       for (var i = 0;i<events.length;i++){
@@ -126,7 +126,7 @@ router.get('/date', function (req, res,next) {
 //       res.json({
 //         events: eventsDates,
 //         count: events.length
-//       }); 
+//       });
 //     }
 //   });
 // });
@@ -164,15 +164,15 @@ router.get('/date/filtersdev',
 
 
 router.get('/test',function(req,res){
-  request('https://api.paris.fr/api/data/2.2/QueFaire/get_events/?token=ec30faf59bcfe1e3ff4637c1a1246e3426591d3f23ec814ec5686305cb83c158&categories=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,26,27,28,29,30,31,32,33,35,37,38&tags=&start=&end=&offset=&limit=2000', 
+  request('https://api.paris.fr/api/data/2.2/QueFaire/get_events/?token=ec30faf59bcfe1e3ff4637c1a1246e3426591d3f23ec814ec5686305cb83c158&categories=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,26,27,28,29,30,31,32,33,35,37,38&tags=&start=&end=&offset=&limit=2000',
   function (error, response, body) {
-    if (!error && response.statusCode == 200) {   
+    if (!error && response.statusCode == 200) {
       var result = JSON.parse(body);
       var events=[]
       for (var i = 0; i<result.data.length;i++){
         var event = {};
-        event.title = result.data[i].title;        
-        event.id = result.data[i].id;        
+        event.title = result.data[i].title;
+        event.id = result.data[i].id;
         event.date = result.data[i].evenements.realDateStart;
         event.category0 = result.data[i].evenements.category.lvl0;
         event.category1 = result.data[i].evenements.category.lvl1;
@@ -189,9 +189,9 @@ router.get('/test',function(req,res){
 
 
 // Paramètres reçus :
-// - req.query.category obligatoire || 
-// - req.query.skip || 
-// - req.query.limit || 
-// - req.query.dateBegin || 
-// - req.query.dateEnd || 
+// - req.query.category obligatoire ||
+// - req.query.skip ||
+// - req.query.limit ||
+// - req.query.dateBegin ||
+// - req.query.dateEnd ||
 module.exports = router;
