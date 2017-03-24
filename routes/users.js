@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var uid2 = require("uid2");
 
+
 var User = require("../models/User.js");
 
 router.post("/sign_up", function(req, res) {
@@ -69,3 +70,5 @@ router.get("/:id", function(req, res) {
       return next(err.message);
     });
 });
+
+module.exports = router;

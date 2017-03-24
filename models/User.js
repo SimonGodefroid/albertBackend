@@ -20,9 +20,10 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.plugin(passportLocalMongoose, {
-  usernameField: "account.username", // L'authentification utilisera `email` plutôt `username`
+  usernameField: "email", // L'authentification utilisera `email` plutôt `username`
   session: false // L'API ne nécessite pas de sessions
 });
+
 
 // Cette méthode sera utilisée par la strategie `passport-local` pour trouver un utilisateur en fonction de son `email` et `password`
 UserSchema.statics.authenticateLocal = function() {
