@@ -21,9 +21,6 @@ router.get('/',
       return next("Category is mandatory");
     }
     var today = getDateFn(0);
-    if(!req.query.realDateStart){
-      console.log('Check pour le Dev req.query.realDateStart',req.query.realDateStart);
-    }
     Event.find({
       $and: [
           {albertCat: { $in: [parseInt(req.query.category)]}},

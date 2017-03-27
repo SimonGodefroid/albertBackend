@@ -206,7 +206,7 @@ events.forEach(function (event_to_save) {
 		}
 
 		event_to_save.contact.phone = event_to_save.contact.phone === null ? null : String(event_to_save.contact.phone);
-		event_to_save.modality.accessPhone = event_to_save.contact.phone === null ? null : String(event_to_save.modality.accessPhone);
+		event_to_save.modality.accessPhone = event_to_save.modality.accessPhone === null ? null : String(event_to_save.modality.accessPhone);
 
 		event_to_save.evenements.periodes.map(function (periode) {
 			periode.dateStart = new Date(periode.dateStart);
