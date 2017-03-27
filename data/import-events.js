@@ -187,6 +187,9 @@ for (var i = 0; i < users.length; i++) {
   );
 }
 
+
+// event_to_save rename to event
+
 // events
 events.forEach(function (event_to_save) {
 
@@ -196,7 +199,14 @@ events.forEach(function (event_to_save) {
 		event_to_save.evenements.realDateStart = new Date(event_to_save.evenements.realDateStart);
 		event_to_save.evenements.realDateEnd = new Date(event_to_save.evenements.realDateEnd);
 
-		event_to_save.contact.phone = String(event_to_save.contact.phone);
+		
+		if(event_to_save.id===15295){
+			console.log("import-events.js#forEach$typeof",typeof event_to_save.contact.phone);
+			console.log("import-events.js#forEach",event_to_save.contact.phone);
+		}
+
+		event_to_save.contact.phone = event_to_save.contact.phone === null ? null : String(event_to_save.contact.phone);
+		event_to_save.modality.accessPhone = event_to_save.contact.phone === null ? null : String(event_to_save.modality.accessPhone);
 
 		event_to_save.evenements.periodes.map(function (periode) {
 			periode.dateStart = new Date(periode.dateStart);
@@ -234,7 +244,7 @@ events.forEach(function (event_to_save) {
 			if (err) {
 				console.log("error saving event");
 			} else {
-				console.log("saved event");
+				//console.log("saved event");
 			}
 		});
 	} else {

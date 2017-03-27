@@ -3,6 +3,14 @@ var router = express.Router();
 var Event = require("../models/Event.js");
 var request = require('request');
 
+
+// getDateFn
+function getDateFn(day){
+  var currentTime = new Date();
+  var todayDate = new Date( Date.UTC (currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate()+day));
+  return todayDate;
+}
+
 // PROD
 // Route pour tous les events d'une catégorie
 // http://localhost:3002/api/events/?category=5
@@ -12,10 +20,9 @@ router.get('/',
     if(!req.query.category){
       return next("Category is mandatory");
     }
-    var currentTime = new Date();
-    var today = new Date( Date.UTC (currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate()));
+    var today = getDateFn(0);
     if(!req.query.realDateStart){
-      console.log('req.query.realDateStart',req.query.realDateStart);
+      console.log('Check pour le Dev req.query.realDateStart',req.query.realDateStart);
     }
     Event.find({
       $and: [
@@ -33,8 +40,6 @@ router.get('/',
       ]
     })
     .sort({'evenements.realDateStart': 'ascending'})
-    //.select('evenements.realDateStart')
-    // .select(['evenements.realDateStart','evenements.realDateEnd','title','idProvider','albertCat'])
     .exec(function (err, events) {
       if (err) {
         console.log('An error occurred' + err);
@@ -69,8 +74,7 @@ router.get('/all', function (req, res) {
 });
 
 router.get('/date', function (req, res,next) {
-  var currentTime = new Date();
-  var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+  var today = getDateFn(0);
   Event.
   find({
     '$or':[{
@@ -133,8 +137,7 @@ router.get('/date', function (req, res,next) {
 
 router.get('/date/filtersdev',
   function(req,res,next){
-    var currentTime = new Date();
-    var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+    var today = getDateFn(0);
     Event.find({
       '$or':[{
         'evenements.realDateStart': {$lte: today},
@@ -160,45 +163,57 @@ router.get('/date/filtersdev',
 
 router.get('/date/overview',
   function(req,res,next){
-    var currentTime = new Date();
-    var today = new Date( currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+    var today = getDateFn(0);
+    var tomorrow = getDateFn(1);
     Event.find({
-      $and: [
-        {albertCat: { $in: [parseInt(req.query.category)]}},
-        {
-          '$or':[{
+      $and: 
+        [{albertCat: { $in: [parseInt(req.query.category)]}},
+        {'$or':
+          [{
             'evenements.realDateStart': {$lte: today},
             'evenements.realDateEnd': {$gt: today},
-          }]
         }]
-      })
+      }]
+    })
     .sort({'evenements.realDateStart': 'ascending'})
     .exec(function (err, eventsInProgress) {
       if (err) {
         console.log('An error occurred' + err);
       } else {
         Event.find({
-          'evenements.realDateStart': {$gte: today}
+          'evenements.realDateStart': {$gt: today}
         })
         .sort({'evenements.realDateStart': 'ascending'})
         .exec(function (err, eventsComing) {
           if (err) {
             console.log('An error occurred' + err);
           } else {
-            res.json({
-              eventsInProgressCount:eventsInProgress.length,
-              eventsComingCount:eventsComing.length,
-              eventsInProgress:eventsInProgress,
-              eventsComing:eventsComing,
-              total: eventsInProgress.length
+            Event.find({
+              $and: [{
+                'evenements.realDateStart':today,
+              }]
+            })
+            .sort({'evenements.realDateStart': 'ascending'})
+            .exec(function (err, eventsToday) {
+              if (err) {
+                console.log('An error occurred' + err);
+              } else {
+                res.json({
+                  total: eventsInProgress.length + eventsToday.length + eventsComing.length,
+                  eventsInProgressCount:eventsInProgress.length,
+                  eventsTodayCount:eventsToday.length,
+                  eventsComingCount:eventsComing.length,
+                  eventsInProgress:eventsInProgress,
+                  eventsToday:eventsToday,
+                  eventsComing:eventsComing,
+                });
+              }
             });
           }
         });
-      };
+      }
     });
   });
-
-
 
 
 
