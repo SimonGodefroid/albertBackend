@@ -173,7 +173,7 @@ for (var i = 0; i < users.length; i++) {
       token: uid2(16),
       account: {
         username: users[i].username,
-        favorites: [],
+        favorites: [11561,3000,2315,12083],
       }
     }),
     "password01", // Le mot de passe doit être obligatoirement le deuxième paramètre transmis à `register` afin d'être crypté
@@ -198,12 +198,6 @@ events.forEach(function (event_to_save) {
 
 		event_to_save.evenements.realDateStart = new Date(event_to_save.evenements.realDateStart);
 		event_to_save.evenements.realDateEnd = new Date(event_to_save.evenements.realDateEnd);
-
-		
-		if(event_to_save.id===15295){
-			console.log("import-events.js#forEach$typeof",typeof event_to_save.contact.phone);
-			console.log("import-events.js#forEach",event_to_save.contact.phone);
-		}
 
 		event_to_save.contact.phone = event_to_save.contact.phone === null ? null : String(event_to_save.contact.phone);
 		event_to_save.modality.accessPhone = event_to_save.modality.accessPhone === null ? null : String(event_to_save.modality.accessPhone);

@@ -51,29 +51,6 @@ router.get('/',
   });
 
 
-router.get('/:id', function (req, res) {
-  console.log(req.params.id);
-  Event.findOne({'idProvider' : req.params.id })
-  .exec(function (err, event) {
-    if (err) {
-      console.log('An error occurred' + err);
-    } else {
-      res.json({
-        event:event,
-        //count: event.length
-      });
-    }
-  });
-});
-
-
-
-
-
-
-
-
-
 // DEV
 // Route pour tous les events
 // http://localhost:3002/api/events/all

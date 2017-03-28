@@ -62,9 +62,12 @@ app.use("/api", cors());
 // Les routes sont séparées dans plusieurs fichiers
 var eventsRoutes = require("./routes/events.js");
 var usersRoutes = require("./routes/users.js");
+var eventRoutes = require("./routes/event.js");
 // Les routes relatives aux utilisateurs auront pour prefix d'URL `/user`
 app.use("/api/events", eventsRoutes);
+app.use("/api/event", eventRoutes);
 app.use("/api/users", usersRoutes);
+
 // Les routes sont séparées dans plusieurs fichiers
 // Les routes relatives aux utilisateurs auront pour prefix d'URL `/user`
 
