@@ -34,7 +34,7 @@ router.post('/:user_id/toggleFavorite/:event_id', function (req,res,next) {
       console.log(err);
     } else {
       console.log(user);
-      Event.findOne({idProvider:req.params.event_id}, function(err,event){ // change to _id when going live
+      Event.findOne({_id:req.params.event_id}, function(err,event){ // change to _id when going live
         if(err){
           console.log(err);
         } else {
@@ -46,7 +46,6 @@ router.post('/:user_id/toggleFavorite/:event_id', function (req,res,next) {
             console.log('l event existe déjà, il va donc sortir du tableau');
             console.log('user.account.favorites.indexOf(event._id)',user.account.favorites.indexOf(event._id));
            user.account.favorites.splice(user.account.favorites.indexOf(event._id),1);
-
           }
           user.save(function(err, obj) {
             res.send('OK');
