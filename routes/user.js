@@ -7,6 +7,7 @@ var request = require('request');
 router.get("/:user_id/favorites", function(req,res,next) {
   User.findById(req.params.user_id)
     .populate("account.favorites")
+    .sort({'evenements.realDateStart': 'ascending'})
     .exec()
     .then(function(user) {
       console.log('Route user/:user_id/favorites ',user);
