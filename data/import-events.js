@@ -169,11 +169,11 @@ for (var i = 0; i < users.length; i++) {
   User.register(
     new User({
       shortId: users[i].id,
-      email: users[i].username.toLowerCase() + "@albert.com",
+      email: users[i].account.username.toLowerCase() + "@albert.com",
       token: uid2(16),
       account: {
-        username: users[i].username,
-        favorites: [11561,3000,2315,12083],
+        username: users[i].account.username,
+        favorites:users[i].account.favorites,
       }
     }),
     "password01", // Le mot de passe doit être obligatoirement le deuxième paramètre transmis à `register` afin d'être crypté

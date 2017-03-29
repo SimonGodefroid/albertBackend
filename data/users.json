@@ -1,5 +1,7 @@
 [{
   "id": 1,
-  "username": "Albert",
-  "favorites": [11561,3000,2315,12083]
-  }]
+  "account": {
+    "username": "Albert",
+    "favorites": [11561,3000,2315,12083]
+  }
+}]
