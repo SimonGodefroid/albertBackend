@@ -27,31 +27,26 @@ router.get("/:user_id/favorites", function(req,res,next) {
 
 
 
-
-
-
-
-
-
-
-
-
-router.post('/:user_id/toggleFavorite/:provider_id', function (req,res,next) {
+router.post('/:user_id/toggleFavorite/:event_id', function (req,res,next) {
   User.findOne({_id:req.params.user_id},
   function(err,user){
     if(err){
       console.log(err);
     } else {
       console.log(user);
-      Event.findOne({idProvider:req.params.provider_id}, function(err,event){
+      Event.findOne({idProvider:req.params.event_id}, function(err,event){ // change to _id when going live
         if(err){
           console.log(err);
         } else {
-          if(user.account.favorites.indexOf(parseInt(req.params.provider_id))===-1){
-            user.account.favorites.push(event);
+          console.log(user.account.favorites);
+          if(user.account.favorites.indexOf(event._id)===-1){
+            user.account.favorites.push(event._id);
+            console.log('id de event ajouté',event._id);
           } else {
-          //  user.account.favorites.splice(user.account.favorites.indexOf(parseInt(req.params.event_id)),1);
-            console.log(user.account.favorites);
+            console.log('l event existe déjà, il va donc sortir du tableau');
+            console.log('user.account.favorites.indexOf(event._id)',user.account.favorites.indexOf(event._id));
+           user.account.favorites.splice(user.account.favorites.indexOf(event._id),1);
+
           }
           user.save(function(err, obj) {
             res.send('OK');
