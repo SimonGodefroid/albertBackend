@@ -1,11 +1,9 @@
 var mongoose = require("mongoose");
 
 var EventSchema = new mongoose.Schema({
-  "shortId": Number,
   "albertCat":Array,
   "idProvider":Number,
   "providerName":String,
-  "id": Number,
   "type": Number,
   "title": String,
   "leadText":String,

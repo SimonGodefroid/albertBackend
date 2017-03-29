@@ -162,34 +162,10 @@ function addAlbertCat(category) {
 	return albertCat;
 }
 
-let ids = [];
-
-// users
-for (var i = 0; i < users.length; i++) {
-  User.register(
-    new User({
-      shortId: users[i].id,
-      email: users[i].account.username.toLowerCase() + "@albert.com",
-      token: uid2(16),
-      account: {
-        username: users[i].account.username,
-        favorites:users[i].account.favorites,
-      }
-    }),
-    "password01", // Le mot de passe doit être obligatoirement le deuxième paramètre transmis à `register` afin d'être crypté
-    function(err, obj) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("saved user " + obj.account.username);
-      }
-    }
-  );
-}
 
 
 // event_to_save rename to event
-
+let ids = [];
 // events
 events.forEach(function (event_to_save) {
 
@@ -208,7 +184,6 @@ events.forEach(function (event_to_save) {
 		});
 
 		var data = new Event({
-			"shortId": uid2(16),
 			"idProvider": event_to_save.id,
 			"providerName": "Quefaire",
 			"type": event_to_save.type,
@@ -248,7 +223,44 @@ events.forEach(function (event_to_save) {
 
 setTimeout(
   function() {
+		console.log('saving users');
+		users.forEach(function(user){
+			Event.find({idProvider: { $in: user.account.favorites }},function(err,events){
+			if(err){
+				console.log(err)
+			} else {
+				User.register(
+					new User({
+						email: user.account.username.toLowerCase() + "@albert.com",
+						token: uid2(16),
+						account: {
+							username: user.account.username,
+							favorites:events,
+						}
+					}),
+					"password01", // Le mot de passe doit être obligatoirement le deuxième paramètre transmis à `register` afin d'être crypté
+					function(err, obj) {
+						if (err) {
+							console.error(err);
+						} else {
+							console.log("saved user " + obj.account.username);
+						}
+					}
+				);
+				}
+			});
+		});
+	},
+  5000
+);
+
+
+
+
+
+setTimeout(
+  function() {
     mongoose.connection.close();
   },
-  8000
+  15000
 );
