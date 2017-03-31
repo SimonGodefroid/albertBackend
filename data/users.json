@@ -3,5 +3,25 @@
   "account": {
     "username": "Albert",
     "favorites": []
+  },
+  "id": 2,
+  "account": {
+    "username": "Clem",
+    "favorites": []
+  },
+  "id": 3,
+  "account": {
+    "username": "Nico",
+    "favorites": []
+  },
+  "id": 4,
+  "account": {
+    "username": "Tim",
+    "favorites": []
+  },
+  "id": 5,
+  "account": {
+    "username": "Jenaic",
+    "favorites": []
   }
 }]
